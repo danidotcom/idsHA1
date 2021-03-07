@@ -1,0 +1,37 @@
+import copy
+
+def determinant(M):
+    """ Laplace´scher Entwicklungssatz """
+
+    # falls Matrix 1x1 ist, return den einen Eintrag
+    if len(M) == 1:
+
+        return M[0][0]
+
+    else:
+
+        det = 0
+
+        # geht die erste Zeile durch und nimmt jeden Eintrag ein mal als "Pivot" für Entwicklungssatz
+        # kopiert die Matrix M 
+            # deepcopy weil sonst M auch geändert wird, wenn N geändert wird --> index out of range
+        for i in range(len(M[0])):
+
+            s = M[0][i] 
+            N = copy.deepcopy(M)
+
+            # löscht i-te Spalte
+            for j in range(len(N)):
+
+                N[j].pop(i) 
+                vorz = (-1)**i
+
+            # löscht erste Zeile
+            N.pop(0)
+
+            # berechnet jeden Summanden der Formel
+            s = vorz * M[0][i] * determinant(N)
+
+            det += s
+
+        return det
